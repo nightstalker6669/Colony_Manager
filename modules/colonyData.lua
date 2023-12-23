@@ -1,10 +1,12 @@
 -- Interacting with the minecolonies mod via the colonyIntegrator block
 local colonyData = {}
 
-function colonyData.fetchBasicColonyData(peripheralName)
-    local integrator = peripheral.wrap(peripheralName)
-    if not integrator then 
-        error("Could not wrap the colonyIntegrator peripheral. Is it correctly named and placed?")
+function colonyData.fetchBasicColonyData()
+    -- Using peripheral.find to automatically find the colonyIntegrator block
+    local integrator = peripheral.find("colonyIntegrator")
+
+    if not integrator then
+        error("Could not find a colonyIntegrator peripheral. Is it correctly attached to the computer?")
     end
 
     -- Using the correct methods provided by the colonyIntegrator API
