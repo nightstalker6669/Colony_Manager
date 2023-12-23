@@ -1,50 +1,26 @@
 local citizenDetails = require("modules.citizenDetails")
-local monitor = peripheral.find("monitor")
 local uiHelpers = require("ui.uiHelperFunctions")
-local displayManager = require("ui.displayManager")
-local currentCitizenIndex = 1
-
-if not monitor then
-    error("Could not find an advanced monitor.")
-end
 
 local citizenDisplay = {}
 
-function citizenDisplay.showCitizens(citizens)
+function citizenDisplay.showCitizens(citizens, drawNavigationTabs, monitor)
     monitor.clear()
-    displayManager.drawNavigationTabs()
-    citizenDisplay.drawCitizenDetails(citizens[currentCitizenIndex])
+    drawNavigationTabs(monitor)
+    citizenDisplay.drawCitizenDetails(citizens[1], monitor, uiHelpers.drawButton)
 end
 
-function citizenDisplay.drawCitizenDetails(citizen)
-    monitor.clear()
-    monitor.setCursorPos(1,1)
-    monitor.setTextScale(0.5) 
-    monitor.write("Detailed Citizen Info:")
+function citizenDisplay.drawCitizenDetails(citizen, monitor, drawButton)
+    monitor.setCursorPos(1, 1)
+    monitor.setTextScale(0.5)
+    monitor.write('Name: ' .. citizen.name)
+    monitor.setCursorPos(1, 2)
+    monitor.write('Age: ' .. citizen.age)
     monitor.setCursorPos(1, 3)
-    monitor.write("ID: " .. citizen.id)
-    monitor.setCursorPos(1, 4)
-    monitor.write("Name: " .. citizen.name)
-    monitor.setCursorPos(1, 5)
-    monitor.write("Age: " .. citizen.age)
-    monitor.setCursorPos(1, 6)
-    monitor.write("Gender: " .. citizen.gender)
-    monitor.setCursorPos(1, 7)
-    monitor.write("Location: X=" .. citizen.location.x .. " Y=" ..
-                  citizen.location.y .. " Z=" .. citizen.location.z)
-    local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
-    monitor.setCursorPos(1, 8)
-    monitor.write("Bed Position: X=" .. extraDetails.bedPosition.x ..
-                  " Y=" .. extraDetails.bedPosition.y ..
-                  " Z=" .. extraDetails.bedPosition.z)
-    monitor.setCursorPos(1, 9)
-    monitor.write("Food Saturation: " .. extraDetails.foodSaturation)
-    monitor.setCursorPos(1, 10)
-    monitor.write("Happiness: " .. extraDetails.happiness)
-    
-    -- Access to monitorXMax and monitorYMax assumes these are set previously in the code.
-    -- If not, they need to be calculated or provided.
-    uiHelpers.drawButton(monitorXMax - 10, monitorYMax - 2, "Next Citizen", "nextCitizen") 
+    monitor.write('Job: ' .. citizen.job)
+    local monitorWidth, monitorHeight = monitor.getSize()
+    local buttonX = monitorWidth - 10 -- Adjust buttonX as needed
+    local buttonY = monitorHeight - 2 -- Adjust buttonY as needed
+    drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
 end
 
 return citizenDisplay
