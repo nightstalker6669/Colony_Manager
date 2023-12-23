@@ -13,11 +13,11 @@ function citizenDetails.fetchAllCitizenDetails()
     
     for _, citizen in pairs(citizens) do
         table.insert(detailedCitizenInfo, {
-            id = citizen.getID(),
-            name = citizen.getName(),
-            age = citizen.getAge(),
-            gender = citizen.getGender(),
-            location = citizen.getLocation(),
+            id = citizen.id, -- Citizen ID
+            name = citizen.name, -- Citizen name
+            age = citizen.age, -- Citizen age
+            gender = citizen.gender, -- Citizen gender
+            location = citizen.location -- Citizen location with x, y, z coordinates
         })
     end
     
