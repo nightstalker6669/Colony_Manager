@@ -5,10 +5,6 @@ local navigation = {}
 local tabs
 
 function navigation.init(monitor, actions)
-    if not monitor then
-        error("Could not find an advanced monitor.")
-    end
-    
     tabs = {
         { ["title"] = "HOME", ["action"] = actions.showHomePage },
         { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
@@ -18,7 +14,7 @@ function navigation.init(monitor, actions)
     local x = 1
     for _, tab in ipairs(tabs) do
         uiHelpers.drawButton(monitor, x, 1, tab["title"], tab["title"])
-        x = x + string.len(tab["title"]) + 3 // 3 spaces padding between tabs
+        x = x + string.len(tab["title"]) + 3
     end
 end
 
@@ -26,7 +22,7 @@ function navigation.handleTabTouch(monitor, x, y)
     for _, tab in ipairs(tabs) do
         local buttonId = uiHelpers.getSelectedButton(x, y, tab.title)
         if buttonId then
-            tab.action(monitor) // Pass monitor to action function
+            tab.action(monitor)
             break
         end
     end

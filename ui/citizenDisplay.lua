@@ -28,7 +28,7 @@ function citizenDisplay.drawCitizenDetails(citizen, monitor, startY)
     monitor.write('Age: ' .. citizen.age)
     y = y + 1
     monitor.setCursorPos(1, y)
-    monitor.write('Job: ' .. (citizen.job or "N/A")) // INPUT_REQUIRED {add logic to display citizen's job or a placeholder if not available}
+    monitor.write('Job: ' .. (citizen.job or "N/A"))
     y = y + 2
     local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
     monitor.setCursorPos(1, y)
