@@ -1,39 +1,49 @@
--- UI functionalities for displaying citizen details on the advanced monitor
-
+local citizenDetails = require("modules.citizenDetails")
 local monitor = peripheral.find("monitor")
+local uiHelpers = require("ui.uiHelperFunctions")
+local currentCitizenIndex = 1
+
 if not monitor then
     error("Could not find an advanced monitor.")
 end
 
 local citizenDisplay = {}
 
-function citizenDisplay.drawCitizenDetails(citizens)
+function citizenDisplay.cycleCitizenDetails(citizens)
+    currentCitizenIndex = currentCitizenIndex + 1
+    if currentCitizenIndex > #citizens then
+        currentCitizenIndex = 1
+    end
+    citizenDisplay.drawCitizenDetails(citizens[currentCitizenIndex])
+end
+
+function citizenDisplay.drawCitizenDetails(citizen)
     monitor.clear()
     monitor.setCursorPos(1,1)
-    monitor.setTextScale(0.5) -- Adjust as needed for the size of the monitor
+    monitor.setTextScale(0.5) 
     monitor.write("Detailed Citizen Info:")
-    for i, citizen in ipairs(citizens) do
-        monitor.setCursorPos(1, 2 + (i * 6)) -- Adjust spacing as needed
-        monitor.write("ID: " .. citizen.id)
-        monitor.setCursorPos(1, 3 + (i * 6))
-        monitor.write("Name: " .. citizen.name)
-        monitor.setCursorPos(1, 4 + (i * 6))
-        monitor.write("Age: " .. citizen.age)
-        monitor.setCursorPos(1, 5 + (i * 6))
-        monitor.write("Gender: " .. citizen.gender)
-        monitor.setCursorPos(1, 6 + (i * 6))
-        monitor.write("Location: X=" .. citizen.location.x .. " Y=" ..
-                      citizen.location.y .. " Z=" .. citizen.location.z)
-        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
-        monitor.setCursorPos(1, 7 + (i * 6))
-        monitor.write("Bed Position: X=" .. extraDetails.bedPosition.x ..
-                      " Y=" .. extraDetails.bedPosition.y ..
-                      " Z=" .. extraDetails.bedPosition.z)
-        monitor.setCursorPos(1, 8 + (i * 6))
-        monitor.write("Food Saturation: " .. extraDetails.foodSaturation)
-        monitor.setCursorPos(1, 9 + (i * 6))
-        monitor.write("Happiness: " .. extraDetails.happiness)
-    end
+    monitor.setCursorPos(1, 3)
+    monitor.write("ID: " .. citizen.id)
+    monitor.setCursorPos(1, 4)
+    monitor.write("Name: " .. citizen.name)
+    monitor.setCursorPos(1, 5)
+    monitor.write("Age: " .. citizen.age)
+    monitor.setCursorPos(1, 6)
+    monitor.write("Gender: " .. citizen.gender)
+    monitor.setCursorPos(1, 7)
+    monitor.write("Location: X=" .. citizen.location.x .. " Y=" ..
+                  citizen.location.y .. " Z=" .. citizen.location.z)
+    local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
+    monitor.setCursorPos(1, 8)
+    monitor.write("Bed Position: X=" .. extraDetails.bedPosition.x ..
+                  " Y=" .. extraDetails.bedPosition.y ..
+                  " Z=" .. extraDetails.bedPosition.z)
+    monitor.setCursorPos(1, 9)
+    monitor.write("Food Saturation: " .. extraDetails.foodSaturation)
+    monitor.setCursorPos(1, 10)
+    monitor.write("Happiness: " .. extraDetails.happiness)
+    
+    uiHelpers.drawButton(monitorXMax - 10, monitorYMax - 2, "Next Citizen", "nextCitizen") 
 end
 
 return citizenDisplay
