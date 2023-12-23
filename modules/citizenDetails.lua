@@ -1,7 +1,6 @@
--- Module for fetching detailed citizen information
+-- Module for fetching detailed citizen information including extra details
 local citizenDetails = {}
 
--- Fetch detailed information for all citizens
 function citizenDetails.fetchAllCitizenDetails()
     local integrator = peripheral.find("colonyIntegrator")
     if not integrator then
@@ -12,19 +11,22 @@ function citizenDetails.fetchAllCitizenDetails()
     local detailedCitizenInfo = {}
     
     for _, citizen in pairs(citizens) do
+        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
         table.insert(detailedCitizenInfo, {
-            id = citizen.id, -- Citizen ID
-            name = citizen.name, -- Citizen name
-            age = citizen.age, -- Citizen age
-            gender = citizen.gender, -- Citizen gender
-            location = citizen.location -- Citizen location with x, y, z coordinates
+            id = citizen.id,
+            name = citizen.name,
+            age = citizen.age,
+            gender = citizen.gender,
+            location = citizen.location,
+            bedPosition = extraDetails.bedPosition,
+            foodSaturation = extraDetails.foodSaturation,
+            happiness = extraDetails.happiness
         })
     end
     
     return detailedCitizenInfo
 end
 
--- Fetch extra citizen details such as bed position, food saturation, and happiness
 function citizenDetails.fetchExtraCitizenDetails(citizenID)
     local integrator = peripheral.find("colonyIntegrator")
     if not integrator then
@@ -42,7 +44,6 @@ function citizenDetails.fetchExtraCitizenDetails(citizenID)
     }
 end
 
--- Log detailed citizen information for diagnostics
 function citizenDetails.logCitizenDetails()
     local details = citizenDetails.fetchAllCitizenDetails()
     for i, citizen in ipairs(details) do

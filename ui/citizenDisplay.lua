@@ -3,39 +3,48 @@ local uiHelpers = require("ui.uiHelperFunctions")
 
 local citizenDisplay = {}
 
+-- Modify existing function to include bed position, food saturation, and happiness
 function citizenDisplay.showCitizens(citizens, drawNavigationTabs, monitor)
     monitor.clear()
     drawNavigationTabs(monitor)
+    local y = 2 -- set initial cursor position
     for i, citizen in ipairs(citizens) do
-        citizenDisplay.drawCitizenDetails(citizen, monitor, uiHelpers.drawButton)
-        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
-        local startLine = 7 + (i - 1) * 4
-        monitor.setCursorPos(1, startLine)
-        monitor.write('Bed position: X=' .. extraDetails.bedPosition.x .. ' Y=' .. extraDetails.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
-        monitor.setCursorPos(1, startLine + 1)
-        monitor.write('Food Saturation: ' .. extraDetails.foodSaturation)
-        monitor.setCursorPos(1, startLine + 2)
-        monitor.write('Happiness: ' .. extraDetails.happiness)
-
-        if i >= 4 then
-            uiHelpers.drawButton(monitor, 2, startLine + 3, "More", "moreCitizens")
-            break
-        end
+        y = citizenDisplay.drawCitizenDetails(citizen, monitor, y) -- Pass y coordinate to function
     end
 end
 
-function citizenDisplay.drawCitizenDetails(citizen, monitor, drawButton)
-    monitor.setCursorPos(1, 1)
+function citizenDisplay.drawCitizenDetails(citizen, monitor, startY)
+    local y = startY
+    monitor.setCursorPos(1, y)
     monitor.setTextScale(0.5)
     monitor.write('Name: ' .. citizen.name)
-    monitor.setCursorPos(1, 2)
+    y = y + 1
+    monitor.setCursorPos(1, y)
     monitor.write('Age: ' .. citizen.age)
-    monitor.setCursorPos(1, 3)
+    y = y + 1
+    monitor.setCursorPos(1, y)
     monitor.write('Job: ' .. citizen.job)
+    y = y + 2
+    local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
+    monitor.setCursorPos(1, y)
+    monitor.write('Bed position: X=' .. extraDetails.bedPosition.x .. ' Y=' .. extraDetails.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
+    y = y + 1
+    monitor.setCursorPos(1, y)
+    monitor.write('Food Saturation: ' .. extraDetails.foodSaturation)
+    y = y + 1
+    monitor.setCursorPos(1, y)
+    monitor.write('Happiness: ' .. extraDetails.happiness)
+    y = y + 2 -- Adding an extra line for spacing
     local monitorWidth, monitorHeight = monitor.getSize()
     local buttonX = monitorWidth - 10
     local buttonY = monitorHeight - 2
-    drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
+    uiHelpers.drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
+
+    if i >= 4 then
+        uiHelpers.drawButton(monitor, 2, y, "More", "moreCitizens")
+        break
+    end
+    return y -- Return the next line's y coordinate to continue from
 end
 
 return citizenDisplay
