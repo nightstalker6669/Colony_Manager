@@ -10,10 +10,10 @@ function navigation.init(actions)
         error("Could not find an advanced monitor.")
     end
     
-    tabs = [
+    tabs = {
         { title: "HOME", action = actions.showHomePage },
         { title: "CITIZENS", action = actions.showCitizenDetailsPage }
-    ]
+    }
     
     local w, _ = monitor.getSize()
     local x = 1
