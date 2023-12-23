@@ -13,7 +13,6 @@ function navigation.init(actions)
     tabs = [
         { title: "HOME", action = actions.showHomePage },
         { title: "CITIZENS", action = actions.showCitizenDetailsPage }
-        // INPUT_REQUIRED {Add more tabs and corresponding actions as needed}
     ]
     
     local w, _ = monitor.getSize()
