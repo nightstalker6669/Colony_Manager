@@ -1,9 +1,6 @@
 -- Module for fetching detailed citizen information
 local citizenDetails = {}
 
--- Required imports or other setup code
-local peripheral = require('peripheral')
-
 -- Fetch detailed information for all citizens
 function citizenDetails.fetchAllCitizenDetails()
     local integrator = peripheral.find("colonyIntegrator")
