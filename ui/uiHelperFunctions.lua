@@ -1,24 +1,21 @@
--- UI helper functions for the Colony_Manager app
-
 local uiHelpers = {}
 
+local buttonList = {}
+
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
-    local monitorWidth, monitorHeight = monitor.getSize()
-    -- INPUT_REQUIRED {Determine the button placement using monitorWidth and monitorHeight and set x, y coordinates}
+    local w, _ = monitor.getSize()
+    local width = string.len(text) + 2
+    local height = 1
     monitor.setCursorPos(x, y)
-    monitor.write("[" .. text .. "]") -- Simple button representation
-    -- Store button info to buttonList if using touch event handling, otherwise, ignore.
+    monitor.write("[" .. text .. "]")
+    buttonList[buttonId] = { x = x, y = y, width = width, height = height }
 end
 
-function uiHelpers.getSelectedButton(touchedX, touchedY)
-    -- Determine which button has been touched based on the touchedX and touchedY coordinates
-    if buttonList and #buttonList > 0 then
-        for _, button in ipairs(buttonList) do
-            if touchedX >= button.x and touchedX <= button.x + button.width 
-                and touchedY >= button.y and touchedY <= button.y + button.height then
-                return button.id
-            end
-        end
+function uiHelpers.getSelectedButton(touchedX, touchedY, buttonId)
+    local button = buttonList[buttonId]
+    if button and touchedX >= button.x and touchedX <= (button.x + button.width - 1)
+        and touchedY >= button.y and touchedY <= (button.y + button.height) then
+        return buttonId
     end
     return nil
 end
