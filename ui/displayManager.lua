@@ -2,7 +2,7 @@
 
 local mainDisplay = require("ui.mainDisplay")
 local citizenDisplay = require("ui.citizenDisplay")
-local event = require("event")
+local citizenDetails = require("modules.citizenDetails")
 local displayManager = {}
 
 function displayManager.showHomePage()
@@ -18,15 +18,14 @@ end
 -- Navigation function to handle user input and switch between different UI pages
 function displayManager.handleNavigation()
     while true do
-        local _, _, x, y = event.pull("monitor_touch")
-        -- Define logic for where user touched, for example:
+        local event, side, x, y = os.pullEvent("monitor_touch")
         if y == 1 then
             displayManager.showHomePage()
         elseif y >= 3 and y <= 5 then
             displayManager.showCitizenDetailsPage()
-        -- You can define additional conditions here for other pages
-        -- INPUT_REQUIRED {implement additional navigation logic based on actual input system}
         end
+        -- Additional conditions for other pages can be added here
+        -- INPUT_REQUIRED {implement additional navigation logic based on actual input system}
     end
 end
 
