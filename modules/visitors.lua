@@ -1,0 +1,1 @@
+-- Placeholder module file for visitor information, no code needed at this point

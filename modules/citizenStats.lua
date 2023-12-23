@@ -1,0 +1,1 @@
+-- Placeholder module file for citizen statistics, no code needed at this point
