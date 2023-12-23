@@ -8,16 +8,37 @@ local navigation = require("ui.navigation")
 
 local displayManager = {}
 
-displayManager.init = function(monitor)
+-- Function that shows citizen details
+function displayManager.showCitizenDetailsPage(monitor)
+    local citizens = citizenDetails.fetchAllCitizenDetails()
+    citizenDisplay.showCitizens(citizens, monitor)
+end
+
+-- Function to show the home page
+displayManager.showHomePage = function(monitor)
+    mainDisplay.showWelcomeScreen(monitor)
     navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
         showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
 end
 
-function displayManager.showHomePage(monitor)
-    mainDisplay.showWelcomeScreen(monitor)
-    navigation.init(monitor)
+displayManager.init = function()
+    local monitor = peripheral.find("monitor")
+    if not monitor then
+        error("Could not find an advanced monitor.")
+    end
+    
+    navigation.init(monitor, {
+        showHomePage = displayManager.showHomePage,
+        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
+    })
+    navigation.bindActions({
+        HOME = function() displayManager.showHomePage(monitor) end,
+        CITIZENS = function() displayManager.showCitizenDetailsPage(monitor) end
+    })
+    
+    displayManager.showHomePage(monitor) -- Display the home page by default
 end
 
 function displayManager.handleNavigation()

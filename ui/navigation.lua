@@ -28,4 +28,16 @@ function navigation.handleTabTouch(monitor, x, y)
     end
 end
 
+-- Function to add action bindings to tabs
+function navigation.bindActions(actionBindings)
+    for tabTitle, action in pairs(actionBindings) do
+        for i, tab in ipairs(tabs) do
+            if tab.title == tabTitle then
+                tab.action = action
+                break
+            end
+        end
+    end
+end
+
 return navigation
