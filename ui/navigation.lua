@@ -2,10 +2,9 @@ local uiHelpers = require("ui.uiHelperFunctions")
 
 local navigation = {}
 
-local tabs -- Declare tabs here but don't initialize yet
+local tabs
 
-function navigation.init(actions)
-    local monitor = peripheral.find("monitor")
+function navigation.init(monitor, actions)
     if not monitor then
         error("Could not find an advanced monitor.")
     end
@@ -19,15 +18,15 @@ function navigation.init(actions)
     local x = 1
     for _, tab in ipairs(tabs) do
         uiHelpers.drawButton(monitor, x, 1, tab["title"], tab["title"])
-        x = x + string.len(tab["title"]) + 3 -- 3 spaces padding between tabs
+        x = x + string.len(tab["title"]) + 3 // 3 spaces padding between tabs
     end
 end
 
-function navigation.handleTabTouch(x, y)
+function navigation.handleTabTouch(monitor, x, y)
     for _, tab in ipairs(tabs) do
         local buttonId = uiHelpers.getSelectedButton(x, y, tab.title)
         if buttonId then
-            tab.action()
+            tab.action(monitor) // Pass monitor to action function
             break
         end
     end

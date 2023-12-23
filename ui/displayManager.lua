@@ -6,28 +6,27 @@ local navigation = require("ui.navigation")
 
 local displayManager = {}
 
-displayManager.init = function()
-    citizenDisplay.init()
-    navigation.init({
+displayManager.init = function(monitor)
+    navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
         showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
 end
 
-function displayManager.showHomePage()
-    mainDisplay.showWelcomeScreen()
-    navigation.init()
-end
-
-function displayManager.showCitizenDetailsPage()
-    local citizens = citizenDetails.fetchAllCitizenDetails()
-    citizenDisplay.showCitizens(citizens, navigation.init)
+function displayManager.showHomePage(monitor)
+    mainDisplay.showWelcomeScreen(monitor)
+    navigation.init(monitor)
 end
 
 function displayManager.handleNavigation()
+    local monitor = peripheral.find("monitor")
+    if not monitor then
+        error("Could not find an advanced monitor.")
+    end
+    displayManager.init(monitor)  // Pass the monitor to the navigation init function 
     while true do
         local event, side, x, y = os.pullEvent("monitor_touch")
-        navigation.handleTabTouch(x, y)
+        navigation.handleTabTouch(monitor, x, y) // Pass the monitor to the handleTabTouch function
     end
 end
 
