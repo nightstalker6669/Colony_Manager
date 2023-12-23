@@ -7,13 +7,13 @@ local constructionMonitor = require("modules.constructionMonitor")
 
 print("Colony Manager starting...")
 
-colonyDataModule.fetchBasicColonyData()
-
 -- Fetch and print basic colony data
 -- The peripheral name passed here should match the actual name in the Minecraft world
 -- Replace 'colonyIntegrator_1' with the correct peripheral name
 -- INPUT_REQUIRED {Replace 'colonyIntegrator_1' with the actual name of your Colony Integrator peripheral}
-parallel.waitForAny(monitorCitizenStats)colonyDataModule.fetchBasicColonyData('colonyIntegrator')
+colonyDataModule.fetchBasicColonyData('colonyIntegrator_1')
+
+-- Define the monitoring functions
 local function monitorCitizenStats()
     citizenMonitor.startMonitoring()
 end
@@ -28,8 +28,5 @@ end
 
 -- Run all monitoring in separate threads so they don't block each other
 parallel.waitForAll(monitorCitizenStats, monitorGravesCount, monitorConstructionSitesCount)
-
--- Run monitoring in a separate thread so it doesn't block execution
-parallel.waitForAny(monitorCitizenStats)
 
 print("Exiting Colony Manager.")
