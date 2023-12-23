@@ -1,6 +1,7 @@
 local citizenDetails = require("modules.citizenDetails")
 local monitor = peripheral.find("monitor")
 local uiHelpers = require("ui.uiHelperFunctions")
+local displayManager = require("ui.displayManager")
 local currentCitizenIndex = 1
 
 if not monitor then
@@ -9,11 +10,9 @@ end
 
 local citizenDisplay = {}
 
-function citizenDisplay.cycleCitizenDetails(citizens)
-    currentCitizenIndex = currentCitizenIndex + 1
-    if currentCitizenIndex > #citizens then
-        currentCitizenIndex = 1
-    end
+function citizenDisplay.showCitizens(citizens)
+    monitor.clear()
+    displayManager.drawNavigationTabs()
     citizenDisplay.drawCitizenDetails(citizens[currentCitizenIndex])
 end
 
@@ -43,6 +42,8 @@ function citizenDisplay.drawCitizenDetails(citizen)
     monitor.setCursorPos(1, 10)
     monitor.write("Happiness: " .. extraDetails.happiness)
     
+    -- Access to monitorXMax and monitorYMax assumes these are set previously in the code.
+    -- If not, they need to be calculated or provided.
     uiHelpers.drawButton(monitorXMax - 10, monitorYMax - 2, "Next Citizen", "nextCitizen") 
 end
 
