@@ -1,6 +1,9 @@
 -- Module for fetching detailed citizen information
 local citizenDetails = {}
 
+-- Required imports or other setup code
+local peripheral = require('peripheral')
+
 -- Fetch detailed information for all citizens
 function citizenDetails.fetchAllCitizenDetails()
     local integrator = peripheral.find("colonyIntegrator")
@@ -22,6 +25,24 @@ function citizenDetails.fetchAllCitizenDetails()
     end
     
     return detailedCitizenInfo
+end
+
+-- Fetch extra citizen details such as bed position, food saturation, and happiness
+function citizenDetails.fetchExtraCitizenDetails(citizenID)
+    local integrator = peripheral.find("colonyIntegrator")
+    if not integrator then
+        error("Could not find a colonyIntegrator peripheral.")
+    end
+
+    local bedPosition = integrator.getBedPosition(citizenID)
+    local foodSaturation = integrator.getFoodSaturation(citizenID)
+    local happiness = integrator.getCitizenHappiness(citizenID)
+
+    return {
+        bedPosition = bedPosition,
+        foodSaturation = foodSaturation,
+        happiness = happiness
+    }
 end
 
 -- Log detailed citizen information for diagnostics

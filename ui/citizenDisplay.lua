@@ -24,6 +24,15 @@ function citizenDisplay.drawCitizenDetails(citizens)
         monitor.setCursorPos(1, 6 + (i * 6))
         monitor.write("Location: X=" .. citizen.location.x .. " Y=" ..
                       citizen.location.y .. " Z=" .. citizen.location.z)
+        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
+        monitor.setCursorPos(1, 7 + (i * 6))
+        monitor.write("Bed Position: X=" .. extraDetails.bedPosition.x ..
+                      " Y=" .. extraDetails.bedPosition.y ..
+                      " Z=" .. extraDetails.bedPosition.z)
+        monitor.setCursorPos(1, 8 + (i * 6))
+        monitor.write("Food Saturation: " .. extraDetails.foodSaturation)
+        monitor.setCursorPos(1, 9 + (i * 6))
+        monitor.write("Happiness: " .. extraDetails.happiness)
     end
 end
 
