@@ -6,17 +6,22 @@ local citizenDisplay = {}
 function citizenDisplay.showCitizens(citizens, drawNavigationTabs, monitor)
     monitor.clear()
     drawNavigationTabs(monitor)
-    citizenDisplay.drawCitizenDetails(citizens[1], monitor, uiHelpers.drawButton)
-end
+    for i, citizen in ipairs(citizens) do
+        citizenDisplay.drawCitizenDetails(citizen, monitor, uiHelpers.drawButton)
+        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
+        local startLine = 7 + (i - 1) * 4
+        monitor.setCursorPos(1, startLine)
+        monitor.write('Bed position: X=' .. extraDetails.bedPosition.x .. ' Y=' .. extraDetails.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
+        monitor.setCursorPos(1, startLine + 1)
+        monitor.write('Food Saturation: ' .. extraDetails.foodSaturation)
+        monitor.setCursorPos(1, startLine + 2)
+        monitor.write('Happiness: ' .. extraDetails.happiness)
 
-function citizenDisplay.showCitizenExtraDetails(citizenID, monitor)
-    local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizenID)
-    monitor.setCursorPos(1, 7)
-    monitor.write('Bed position: X=' .. extraDetails.bedPosition.x .. ' Y=' .. extraDetails.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
-    monitor.setCursorPos(1, 8)
-    monitor.write('Food Saturation: ' .. extraDetails.foodSaturation)
-    monitor.setCursorPos(1, 9)
-    monitor.write('Happiness: ' .. extraDetails.happiness)
+        if i >= 4 then
+            uiHelpers.drawButton(monitor, 2, startLine + 3, "More", "moreCitizens")
+            break
+        end
+    end
 end
 
 function citizenDisplay.drawCitizenDetails(citizen, monitor, drawButton)
@@ -28,12 +33,9 @@ function citizenDisplay.drawCitizenDetails(citizen, monitor, drawButton)
     monitor.setCursorPos(1, 3)
     monitor.write('Job: ' .. citizen.job)
     local monitorWidth, monitorHeight = monitor.getSize()
-    local buttonX = monitorWidth - 10 -- Adjust buttonX as needed
-    local buttonY = monitorHeight - 2 -- Adjust buttonY as needed
+    local buttonX = monitorWidth - 10
+    local buttonY = monitorHeight - 2
     drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
-    
-    -- Call the function to show extra details
-    citizenDisplay.showCitizenExtraDetails(citizen.id, monitor)
 end
 
 return citizenDisplay

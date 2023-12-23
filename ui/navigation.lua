@@ -11,15 +11,15 @@ function navigation.init(actions)
     end
     
     tabs = {
-        { title: "HOME", action = actions.showHomePage },
-        { title: "CITIZENS", action = actions.showCitizenDetailsPage }
+        { ["title"] = "HOME", ["action"] = actions.showHomePage },
+        { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
     }
     
     local w, _ = monitor.getSize()
     local x = 1
     for _, tab in ipairs(tabs) do
-        uiHelpers.drawButton(monitor, x, 1, tab.title, tab.title)
-        x = x + string.len(tab.title) + 3 -- 3 spaces padding between tabs
+        uiHelpers.drawButton(monitor, x, 1, tab["title"], tab["title"])
+        x = x + string.len(tab["title"]) + 3 -- 3 spaces padding between tabs
     end
 end
 
