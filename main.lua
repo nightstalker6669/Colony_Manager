@@ -28,4 +28,8 @@ end
 -- Run all monitoring in separate threads so they don't block each other
 parallel.waitForAll(monitorCitizenStats, monitorGravesCount, monitorConstructionSitesCount)
 
+-- For demonstration purposes, log the detailed citizen information to the console.
+local citizenDetails = require("modules.citizenDetails")
+citizenDetails.logCitizenDetails()
+
 print("Exiting Colony Manager.")
