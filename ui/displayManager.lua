@@ -8,7 +8,11 @@ local displayManager = {}
 
 displayManager.init = function()
     citizenDisplay.init()
-    navigation.init()
+    navigation.init({
+        showHomePage = displayManager.showHomePage,
+        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
+        // INPUT_REQUIRED {Pass any additional display functions required by new tabs}
+    })
 end
 
 function displayManager.showHomePage()

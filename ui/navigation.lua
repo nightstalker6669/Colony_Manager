@@ -1,19 +1,21 @@
 local uiHelpers = require("ui.uiHelperFunctions")
-local displayManager = require("ui.displayManager")
 
 local navigation = {}
 
-local tabs = {
-    { title = "HOME", action = displayManager.showHomePage },
-    { title = "CITIZENS", action = displayManager.showCitizenDetailsPage },
-    -- Add more tabs as needed
-}
+local tabs -- Declare tabs here but don't initialize yet
 
-function navigation.init()
+function navigation.init(actions)
     local monitor = peripheral.find("monitor")
     if not monitor then
         error("Could not find an advanced monitor.")
     end
+    
+    tabs = [
+        { title: "HOME", action = actions.showHomePage },
+        { title: "CITIZENS", action = actions.showCitizenDetailsPage }
+        // INPUT_REQUIRED {Add more tabs and corresponding actions as needed}
+    ]
+    
     local w, _ = monitor.getSize()
     local x = 1
     for _, tab in ipairs(tabs) do
