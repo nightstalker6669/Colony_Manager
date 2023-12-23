@@ -8,7 +8,5 @@ print("Colony Manager starting...")
 -- Initialize home page display
 displayManager.showHomePage()
 
--- Listen for user navigation inputs (TO IMPLEMENT: define handleNavigation with user input detection)
-displayManager.handleNavigation()
-
-print("Exiting Colony Manager.")
+-- Continuously listen for user navigation inputs
+displayManager.handleNavigation() -- The loop inside this function will keep the script running
