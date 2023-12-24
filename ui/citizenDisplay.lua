@@ -1,9 +1,8 @@
-local citizenDetails = require("modules.citizenDetails")
-local uiHelpers = require("ui.uiHelperFunctions")
+local pageControls = require("ui.pageControls")
 
 local citizenDisplay = {}
 
-local currentPage = 0 -- New variable for pagination
+local currentPage = 0
 
 function citizenDisplay.showCitizens(citizens, monitor, currentPage)
     local y = 2
@@ -17,7 +16,11 @@ function citizenDisplay.showCitizens(citizens, monitor, currentPage)
         y = citizenDisplay.drawCitizenDetails(citizen, monitor, y)
     end
 
-    pageControls.showPageControls(monitor, currentPage, totalPages)
+    local _, monitorHeight = monitor.getSize()
+    y = monitorHeight - 1
+    if totalPages > 1 then
+        pageControls.showPageControls(monitor, currentPage, totalPages, y)
+    end
 end
 
 function citizenDisplay.incrementPage()
@@ -44,9 +47,9 @@ function citizenDisplay.drawCitizenDetails(citizen, monitor, startY)
     y = y + 1
     monitor.setCursorPos(1, y)
     monitor.write('Happiness: ' .. citizen.happiness)
-    y = y + 2 -- Adding an extra line for spacing
+    y = y + 2
 
-    return y -- Return the next line's y coordinate to continue from
+    return y
 end
 
 return citizenDisplay

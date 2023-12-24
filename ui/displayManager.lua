@@ -5,15 +5,11 @@ local citizenDisplay = require("ui.citizenDisplay")
 local citizenDetails = require("modules.citizenDetails")
 local uiHelpers = require("ui.uiHelperFunctions")
 local navigation = require("ui.navigation")
+local pageControls = require("ui.pageControls")
 
 local displayManager = {}
 
 local currentPage = 0
-
-local function changePage(monitor, increment)
-    currentPage = currentPage + increment
-    displayManager.showCitizenDetailsPage(monitor, currentPage)
-end
 
 function displayManager.showCitizenDetailsPage(monitor, currentPage)
     local citizens = citizenDetails.fetchAllCitizenDetails()
@@ -45,8 +41,8 @@ displayManager.init = function()
     navigation.bindActions({
         HOME = function() displayManager.showHomePage(monitor) end,
         CITIZENS = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end,
-        nextPage = function() changePage(monitor, 1) end,
-        prevPage = function() changePage(monitor, -1) end
+        nextPage = function() pageControls.changePage(monitor, 1, displayManager.showCitizenDetailsPage) end,
+        prevPage = function() pageControls.changePage(monitor, -1, displayManager.showCitizenDetailsPage) end
     })
 
     displayManager.showHomePage(monitor)
