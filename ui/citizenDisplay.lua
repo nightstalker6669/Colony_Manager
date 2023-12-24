@@ -31,7 +31,7 @@ function citizenDisplay.drawCitizenDetails(citizen, monitor, startY)
     monitor.write('Job: ' .. (citizen.job or "N/A"))
     y = y + 2
     monitor.setCursorPos(1, y)
-    monitor.write('Bed position: X=' .. citizen.bedPosition.x .. ' Y=' .. citizen.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
+    monitor.write('Bed position: X=' .. citizen.bedPosition.x .. ' Y=' .. citizen.bedPosition.y .. ' Z=' .. citizen.bedPosition.z)
     y = y + 1
     monitor.setCursorPos(1, y)
     monitor.write('Food Saturation: ' .. citizen.foodSaturation)
