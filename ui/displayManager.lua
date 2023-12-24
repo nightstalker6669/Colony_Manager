@@ -1,6 +1,5 @@
 -- Main display manager for the Colony_Manager app
  
-
 local mainDisplay = require("ui.mainDisplay")
 local citizenDisplay = require("ui.citizenDisplay")
 local citizenDetails = require("modules.citizenDetails")
@@ -18,9 +17,9 @@ function displayManager.showCitizenDetailsPage(monitor, currentPage)
     citizenDisplay.showCitizens(citizens, monitor, currentPage)
     local _, monitorHeight = monitor.getSize()
     local totalPages = math.ceil(#citizens / 4) -- INPUT_REQUIRED add proper calculation for totalPages if applicable logic changes
-    pageControls.showPageControls(monitor, currentPage, totalPages, monitorHeight - 1)
+    local yCoordinateForPageControls = monitorHeight - 1 -- INPUT_REQUIRED Make sure this calculation for y coordinate is correct based on your specific monitor setup
+    pageControls.showPageControls(monitor, currentPage, totalPages, yCoordinateForPageControls)
 end
-
 displayManager.showHomePage = function(monitor)
     mainDisplay.showWelcomeScreen(monitor)
     navigation.init(monitor, {

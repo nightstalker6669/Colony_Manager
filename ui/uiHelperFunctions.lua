@@ -28,6 +28,12 @@ end
 
 function uiHelpers.validateButtonCoordinates(x, y)
     debugLogger.log("validateButtonCoordinates called with X=" .. tostring(x) .. ", Y=" .. tostring(y))
+    if x == nil then
+        error("X coordinate must not be nil.")
+    end
+    if y == nil then
+        error("Y coordinate must not be nil.")
+    end
     if type(x) ~= "number" then
         error("X coordinate must be a number. Received: " .. tostring(x))
     end
