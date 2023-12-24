@@ -1,4 +1,4 @@
--- Module for fetching detailed citizen information
+-- Module for fetching detailed citizen information including extra details
 local citizenDetails = {}
 
 function citizenDetails.fetchAllCitizenDetails()
@@ -11,16 +11,16 @@ function citizenDetails.fetchAllCitizenDetails()
     local detailedCitizenInfo = {}
     
     for _, citizen in pairs(citizens) do
-        -- Extracting the bed position, food saturation, and happiness directly
+        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
         table.insert(detailedCitizenInfo, {
             id = citizen.id,
             name = citizen.name,
             age = citizen.age,
             gender = citizen.gender,
             location = citizen.location,
-            bedPosition = citizen.bedPos, -- directly using bedPos from citizen
-            foodSaturation = citizen.saturation, -- directly using saturation from citizen
-            happiness = citizen.happiness -- directly using happiness from citizen
+            bedPosition = extraDetails.bedPosition,
+            foodSaturation = extraDetails.foodSaturation,
+            happiness = extraDetails.happiness
         })
     end
     
@@ -36,9 +36,6 @@ function citizenDetails.logCitizenDetails()
         print("Age: " .. citizen.age)
         print("Gender: " .. citizen.gender)
         print("Location: X=" .. citizen.location.x .. " Y=" .. citizen.location.y .. " Z=" .. citizen.location.z)
-        print("Bed position: X=" .. citizen.bedPosition.x .. " Y=" .. citizen.bedPosition.y .. " Z=" .. citizen.bedPosition.z)
-        print("Food Saturation: " .. citizen.foodSaturation)
-        print("Happiness: " .. citizen.happiness)
         print("------")
     end
 end

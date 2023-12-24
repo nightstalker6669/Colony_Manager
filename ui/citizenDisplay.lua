@@ -30,15 +30,14 @@ function citizenDisplay.drawCitizenDetails(citizen, monitor, startY)
     monitor.setCursorPos(1, y)
     monitor.write('Job: ' .. (citizen.job or "N/A"))
     y = y + 2
-    local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
     monitor.setCursorPos(1, y)
-    monitor.write('Bed position: X=' .. extraDetails.bedPosition.x .. ' Y=' .. extraDetails.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
+    monitor.write('Bed position: X=' .. citizen.bedPosition.x .. ' Y=' .. citizen.bedPosition.y .. ' Z=' .. extraDetails.bedPosition.z)
     y = y + 1
     monitor.setCursorPos(1, y)
-    monitor.write('Food Saturation: ' .. extraDetails.foodSaturation)
+    monitor.write('Food Saturation: ' .. citizen.foodSaturation)
     y = y + 1
     monitor.setCursorPos(1, y)
-    monitor.write('Happiness: ' .. extraDetails.happiness)
+    monitor.write('Happiness: ' .. citizen.happiness)
     y = y + 2 -- Adding an extra line for spacing
 
     return y -- Return the next line's y coordinate to continue from
