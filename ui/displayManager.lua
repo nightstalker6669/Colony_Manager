@@ -15,6 +15,9 @@ function displayManager.showCitizenDetailsPage(monitor, currentPage)
     local citizens = citizenDetails.fetchAllCitizenDetails()
     currentPage = math.max(0, math.min(math.ceil(#citizens / 4) - 1, currentPage))
     citizenDisplay.showCitizens(citizens, monitor, currentPage)
+    local _, monitorHeight = monitor.getSize()
+    local totalPages = math.ceil(#citizens / 4) // INPUT_REQUIRED add proper calculation for totalPages if applicable logic changes
+    pageControls.showPageControls(monitor, currentPage, totalPages, monitorHeight - 1)
 end
 
 displayManager.showHomePage = function(monitor)
