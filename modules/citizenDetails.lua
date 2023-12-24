@@ -18,7 +18,7 @@ function citizenDetails.fetchAllCitizenDetails()
             gender = citizen.gender,
             location = citizen.location,
             bedPosition = citizen.bedPos,
-            foodSaturation = citizen.foodSaturation,
+            foodSaturation = citizen.saturation,
             happiness = citizen.happiness
         })
     end

@@ -3,17 +3,21 @@ local uiHelpers = require("ui.uiHelperFunctions")
 local navigation = {}
 
 local tabs
+local TAB_START_LINE = 3
 
 function navigation.init(monitor, actions)
     tabs = {
         { ["title"] = "HOME", ["action"] = actions.showHomePage },
         { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
     }
-    
-    local w, _ = monitor.getSize()
+    navigation.drawTabs(monitor, TAB_START_LINE)
+end
+
+function navigation.drawTabs(monitor, startLine)
+    monitor.clear()
     local x = 1
     for _, tab in ipairs(tabs) do
-        uiHelpers.drawButton(monitor, x, 1, tab["title"], tab["title"])
+        uiHelpers.drawButton(monitor, x, startLine, tab["title"], tab["title"])
         x = x + string.len(tab["title"]) + 3
     end
 end
