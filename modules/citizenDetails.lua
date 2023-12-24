@@ -11,16 +11,15 @@ function citizenDetails.fetchAllCitizenDetails()
     local detailedCitizenInfo = {}
     
     for _, citizen in pairs(citizens) do
-        local extraDetails = citizenDetails.fetchExtraCitizenDetails(citizen.id)
         table.insert(detailedCitizenInfo, {
             id = citizen.id,
             name = citizen.name,
             age = citizen.age,
             gender = citizen.gender,
             location = citizen.location,
-            bedPosition = extraDetails.bedPosition,
-            foodSaturation = extraDetails.foodSaturation,
-            happiness = extraDetails.happiness
+            bedPosition = citizen.bedPosition,
+            foodSaturation = citizen.foodSaturation,
+            happiness = citizen.happiness
         })
     end
     
