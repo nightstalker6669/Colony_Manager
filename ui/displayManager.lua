@@ -30,8 +30,8 @@ displayManager.showHomePage = function(monitor)
     })
 end
 
--- The missing code snippet is included below
-displayManager.init = function()
+-- Previous implementation of init function
+function displayManager.init()
     local monitor = peripheral.find("monitor")
     if not monitor then
         error("Could not find an advanced monitor.")

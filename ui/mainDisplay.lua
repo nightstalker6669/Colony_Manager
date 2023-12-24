@@ -8,10 +8,30 @@ local mainDisplay = {}
 local TAB_START_LINE = 3
 
 function mainDisplay.showWelcomeScreen(monitor)
-    local data = colonyDataModule.fetchBasicColonyData()
+    -- If the monitor isn't passed in, look for it
     if not monitor then
-        error("Could not find an advanced monitor.")
+        monitor = peripheral.find("monitor")
+        if not monitor then
+            error("Could not find an advanced monitor.")
+        end
     end
+    local data
+    -- Protected call (pcall) to catch exceptions from data fetching
+    local success, message = pcall(function()
+      data = colonyDataModule.fetchBasicColonyData()
+    end)
+
+    -- If data fetching failed, show error and return
+    if not success then
+        monitor.clear()
+        monitor.setTextScale(0.5)
+        monitor.setCursorPos(1,1)
+        monitor.write("Error fetching colony data:")
+        monitor.setCursorPos(1,2)
+        monitor.write(message)
+        return
+    end
+    -- Continue with the rest of the function as is...
     monitor.clear()
     monitor.setCursorPos(1,1)
     monitor.setTextScale(0.5)
