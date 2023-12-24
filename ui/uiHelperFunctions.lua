@@ -7,14 +7,14 @@ local buttonList = {}
 local debugLogger = require("utils.debugLogger")
 
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
-    -- Added code to ensure the button doesn't exceed the width of the monitor
-    debugLogger.log("drawing button: " .. text ..)
+    debugLogger.log("drawing button: " .. text)
     local monitorWidth, _ = monitor.getSize()
     uiHelpers.validateButtonCoordinates(x, y) -- Ensure that coordinates are numbers
     local width = string.len(text) + 2
     if x + width > monitorWidth then
         error("Button exceeds monitor width, adjust the position or monitor size.")
     end
+    local height = 1 -- Assign a default height for the button
     monitor.setCursorPos(x, y)
     monitor.write("[" .. text .. "]")
     buttonList[buttonId] = { x = x, y = y, width = width, height = height }
