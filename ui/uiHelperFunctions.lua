@@ -1,9 +1,12 @@
+-- Utility helper functions for UI
+
 local uiHelpers = {}
 
 local buttonList = {}
 
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
-    local w, _ = monitor.getSize()
+    -- Validate coordinates
+    uiHelpers.validateButtonCoordinates(x, y) -- Ensure that coordinates are numbers
     local width = string.len(text) + 2
     local height = 1
     monitor.setCursorPos(x, y)
@@ -11,13 +14,21 @@ function uiHelpers.drawButton(monitor, x, y, text, buttonId)
     buttonList[buttonId] = { x = x, y = y, width = width, height = height }
 end
 
-function uiHelpers.getSelectedButton(touchedX, touchedY, buttonId)
-    local button = buttonList[buttonId]
-    if button and touchedX >= button.x and touchedX <= (button.x + button.width - 1)
-        and touchedY >= button.y and touchedY <= (button.y + button.height) then
-        return buttonId
+function uiHelpers.getSelectedButton(touchedX, touchedY)
+    for id, button in pairs(buttonList) do
+        if touchedX >= button.x and touchedX <= (button.x + button.width - 1)
+           and touchedY >= button.y and touchedY <= (button.y + button.height) then
+            return id
+        end
     end
     return nil
+end
+
+function uiHelpers.validateButtonCoordinates(x, y)
+    if type(x) ~= "number" or type(y) ~= "number" then
+        error("Coordinates must be numbers. Received: " .. tostring(x) .. ", " .. tostring(y))
+    end
+    return true
 end
 
 return uiHelpers

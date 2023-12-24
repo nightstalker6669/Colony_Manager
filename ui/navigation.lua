@@ -1,3 +1,5 @@
+-- Navigation management for the advanced monitor interface
+
 local uiHelpers = require("ui.uiHelperFunctions")
 
 local navigation = {}
@@ -23,9 +25,10 @@ function navigation.drawTabs(monitor, startLine)
 end
 
 function navigation.handleTabTouch(monitor, x, y)
+    uiHelpers.validateButtonCoordinates(x, y) -- Validate the touch coordinates before use
     for _, tab in ipairs(tabs) do
-        local buttonId = uiHelpers.getSelectedButton(x, y, tab.title)
-        if buttonId then
+        local buttonId = uiHelpers.getSelectedButton(x, y)
+        if buttonId and buttonId == tab.title then
             tab.action(monitor)
             break
         end
