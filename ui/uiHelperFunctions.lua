@@ -8,6 +8,7 @@ local debugLogger = require("utils.debugLogger")
 
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
     -- Added code to ensure the button doesn't exceed the width of the monitor
+    debugLogger.log("drawing button: " .. text ..)
     local monitorWidth, _ = monitor.getSize()
     uiHelpers.validateButtonCoordinates(x, y) -- Ensure that coordinates are numbers
     local width = string.len(text) + 2
