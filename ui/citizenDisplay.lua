@@ -16,10 +16,11 @@ function citizenDisplay.showCitizens(citizens, monitor)
         y = citizenDisplay.drawCitizenDetails(citizen, monitor, y)
     end
 
+    -- Check whether we have a sensible y-coordinate before drawing the button
+    local monitorWidth, monitorHeight = monitor.getSize()
     if endIndex < #citizens then
-        local monitorWidth, monitorHeight = monitor.getSize()
         local buttonX = monitorWidth - 10
-        local buttonY = monitorHeight - 2
+        local buttonY = math.max(monitorHeight - 2, 1)  -- Ensure not less than 1
         uiHelpers.drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
     end
 end

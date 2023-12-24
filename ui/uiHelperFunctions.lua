@@ -25,8 +25,11 @@ function uiHelpers.getSelectedButton(touchedX, touchedY)
 end
 
 function uiHelpers.validateButtonCoordinates(x, y)
-    if type(x) ~= "number" or type(y) ~= "number" then
-        error("Coordinates must be numbers. Received: " .. tostring(x) .. ", " .. tostring(y))
+    if type(x) ~= "number" then
+        error("X coordinate must be a number. Received: " .. tostring(x))
+    end
+    if type(y) ~= "number" then
+        error("Y coordinate must be a number. Received: " .. tostring(y))
     end
     return true
 end
