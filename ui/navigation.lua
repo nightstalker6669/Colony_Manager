@@ -6,12 +6,14 @@ local navigation = {}
 
 local tabs
 local TAB_START_LINE = 3
+local actionBindings
 
 function navigation.init(monitor, actions)
     tabs = {
         { ["title"] = "HOME", ["action"] = actions.showHomePage },
         { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
     }
+    actionBindings = actions
     navigation.drawTabs(monitor, TAB_START_LINE)
 end
 
@@ -25,13 +27,10 @@ function navigation.drawTabs(monitor, startLine)
 end
 
 function navigation.handleTabTouch(monitor, x, y)
-    uiHelpers.validateButtonCoordinates(x, y) -- Validate the touch coordinates before use
-    for _, tab in ipairs(tabs) do
-        local buttonId = uiHelpers.getSelectedButton(x, y)
-        if buttonId and buttonId == tab.title then
-            tab.action(monitor)
-            break
-        end
+    uiHelpers.validateButtonCoordinates(x, y)
+    local buttonId = uiHelpers.getSelectedButton(x, y)
+    if buttonId and actionBindings[buttonId] then
+        actionBindings[buttonId](monitor)
     end
 end
 

@@ -5,24 +5,19 @@ local citizenDisplay = {}
 
 local currentPage = 0 -- New variable for pagination
 
-function citizenDisplay.showCitizens(citizens, monitor)
+function citizenDisplay.showCitizens(citizens, monitor, currentPage)
     local y = 2
     local citizensPerPage = 4
     local startIndex = currentPage * citizensPerPage + 1
     local endIndex = math.min(startIndex + citizensPerPage - 1, #citizens)
+    local totalPages = math.ceil(#citizens / citizensPerPage)
 
     for i = startIndex, endIndex do
         local citizen = citizens[i]
         y = citizenDisplay.drawCitizenDetails(citizen, monitor, y)
     end
 
-    -- Check whether we have a sensible y-coordinate before drawing the button
-    local monitorWidth, monitorHeight = monitor.getSize()
-    if endIndex < #citizens then
-        local buttonX = monitorWidth - 10
-        local buttonY = math.max(monitorHeight - 2, 1)  -- Ensure not less than 1
-        uiHelpers.drawButton(monitor, buttonX, buttonY, "Next", "nextCitizen")
-    end
+    pageControls.showPageControls(monitor, currentPage, totalPages)
 end
 
 function citizenDisplay.incrementPage()
