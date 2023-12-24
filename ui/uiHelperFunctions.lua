@@ -29,6 +29,7 @@ function uiHelpers.validateButtonCoordinates(x, y)
         error("X coordinate must be a number. Received: " .. tostring(x))
     end
     if type(y) ~= "number" then
+        print("validateButtonCoordinates received: X coordinate - " .. tostring(x) .. ", Y coordinate - " .. tostring(y)) // INPUT_REQUIRED Validate logged information and take necessary action
         error("Y coordinate must be a number. Received: " .. tostring(y))
     end
     return true
