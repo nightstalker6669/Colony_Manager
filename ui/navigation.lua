@@ -5,7 +5,6 @@ local uiHelpers = require("ui.uiHelperFunctions")
 local navigation = {}
 
 local tabs
-local TAB_START_LINE = 3
 local actionBindings
 
 function navigation.init(monitor, actions)
@@ -22,7 +21,14 @@ function navigation.drawTabs(monitor, startLine)
     local x = 1
     for _, tab in ipairs(tabs) do
         uiHelpers.drawButton(monitor, x, startLine, tab["title"], tab["title"])
+        -- Increment the x coordinate by the length of the title and some padding
         x = x + string.len(tab["title"]) + 3
+        local monitorWidth, _ = monitor.getSize()
+        if x >= monitorWidth then
+            -- Reset x to 1 and increment the y coordinate to start a new line of tabs.
+            x = 1
+            startLine = startLine + 1
+        end
     end
 end
 
