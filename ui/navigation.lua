@@ -7,18 +7,17 @@ local navigation = {}
 local tabs
 local actionBindings
 
-local TAB_START_LINE = 1 -- INPUT_REQUIRED Define TAB_START_LINE if not already defined elsewhere
-
 function navigation.init(monitor, actions)
     tabs = {
         { ["title"] = "HOME", ["action"] = actions.showHomePage },
         { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
     }
     actionBindings = actions
-    navigation.drawTabs(monitor, TAB_START_LINE)
+    navigation.drawTabs(monitor)
 end
 
-navigation.drawTabs = function(monitor, startLine)
+navigation.drawTabs = function(monitor)
+    local startLine = _G.TAB_START_LINE -- Use the globally defined TAB_START_LINE
     monitor.clear()
     local x = 1
     for _, tab in ipairs(tabs) do

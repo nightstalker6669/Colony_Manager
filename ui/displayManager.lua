@@ -11,6 +11,8 @@ local displayManager = {}
 
 local currentPage = 0
 
+_G.TAB_START_LINE = 3 
+
 function displayManager.showCitizenDetailsPage(monitor, currentPage)
     local citizens = citizenDetails.fetchAllCitizenDetails()
     currentPage = math.max(0, math.min(math.ceil(#citizens / 4) - 1, currentPage))
@@ -28,6 +30,7 @@ displayManager.showHomePage = function(monitor)
     })
 end
 
+-- The missing code snippet is included below
 displayManager.init = function()
     local monitor = peripheral.find("monitor")
     if not monitor then
