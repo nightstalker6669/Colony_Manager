@@ -4,6 +4,8 @@ local uiHelpers = {}
 
 local buttonList = {}
 
+local debugLogger = require("utils.debugLogger")
+
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
     -- Validate coordinates
     uiHelpers.validateButtonCoordinates(x, y) -- Ensure that coordinates are numbers
@@ -25,11 +27,11 @@ function uiHelpers.getSelectedButton(touchedX, touchedY)
 end
 
 function uiHelpers.validateButtonCoordinates(x, y)
+    debugLogger.log("validateButtonCoordinates called with X=" .. tostring(x) .. ", Y=" .. tostring(y))
     if type(x) ~= "number" then
         error("X coordinate must be a number. Received: " .. tostring(x))
     end
     if type(y) ~= "number" then
-        print("validateButtonCoordinates received: X coordinate - " .. tostring(x) .. ", Y coordinate - " .. tostring(y)) // INPUT_REQUIRED Validate logged information and take necessary action
         error("Y coordinate must be a number. Received: " .. tostring(y))
     end
     return true
