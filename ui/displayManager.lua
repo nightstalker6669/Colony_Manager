@@ -11,15 +11,15 @@ local displayManager = {}
 
 local currentPage = 0
 
-_G.TAB_START_LINE = 3 
+_G.TAB_START_LINE = 3
 
 function displayManager.showCitizenDetailsPage(monitor, currentPage)
     local citizens = citizenDetails.fetchAllCitizenDetails()
     currentPage = math.max(0, math.min(math.ceil(#citizens / 4) - 1, currentPage))
     citizenDisplay.showCitizens(citizens, monitor, currentPage)
     local _, monitorHeight = monitor.getSize()
-    local totalPages = math.ceil(#citizens / 4) 
-    local yCoordinateForPageControls = monitorHeight - 1 
+    local totalPages = math.ceil(#citizens / 4)
+    local yCoordinateForPageControls = monitorHeight - 1
     pageControls.showPageControls(monitor, currentPage, totalPages, yCoordinateForPageControls)
 end
 displayManager.showHomePage = function(monitor)
@@ -28,7 +28,7 @@ displayManager.showHomePage = function(monitor)
         showHomePage = displayManager.showHomePage,
         showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
-}
+end
 
 function displayManager.init()
     local monitor = peripheral.find("monitor")
