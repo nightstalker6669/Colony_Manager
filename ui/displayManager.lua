@@ -26,8 +26,12 @@ displayManager.showHomePage = function(monitor)
     mainDisplay.showWelcomeScreen(monitor)
     navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
-        showCitizenDetailsPage = displayManager.showCitizenDetailsPage // INPUT_REQUIRED The showCitizenDetailsPage function should display the citizen details page
+        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
+    local tasks = uiHelpers.fetchTasks()
+    local _, maxHeight = monitor.getSize()
+    local maxLines = maxHeight - TAB_START_LINE
+    mainDisplay.showTasks(tasks, monitor, maxLines)
 end
 
 function displayManager.init()
@@ -35,18 +39,12 @@ function displayManager.init()
     if not monitor then
         error("Could not find an advanced monitor.")
     end
-    navigation.init(monitor, {
-        showHomePage = displayManager.showHomePage,
-        showCitizenDetailsPage = displayManager.showCitizenDetailsPage // INPUT_REQUIRED Check here that the ID 'CITIZENS' matches the ID expected in the action bindings for displaying citizen details page
-    })
-
     navigation.bindActions({
         HOME = function() displayManager.showHomePage(monitor) end,
         CITIZENS = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end,
         nextPage = function() pageControls.changePage(monitor, 1, displayManager.showCitizenDetailsPage) end,
         prevPage = function() pageControls.changePage(monitor, -1, displayManager.showCitizenDetailsPage) end
     })
-
     displayManager.showHomePage(monitor)
 end
 
