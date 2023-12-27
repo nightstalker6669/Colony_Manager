@@ -37,9 +37,9 @@ navigation.handleTabTouch = function(monitor, x, y)
     if buttonId then
         local debugLogger = require("utils.debugLogger")
         debugLogger.log("Tab touch detected: " .. buttonId)
-        if actionBindings[buttonId] then
+        if actionBindings[buttonId:upper()] then
             debugLogger.log("Executing action for: " .. buttonId)
-            actionBindings[buttonId](monitor)
+            actionBindings[buttonId:upper()](monitor)
         else
             debugLogger.log("No action binding found for: " .. buttonId)
         end
@@ -48,7 +48,7 @@ end
 
 navigation.bindActions = function(bindings)
     for tabTitle, action in pairs(bindings) do
-        actionBindings[tabTitle] = action
+        actionBindings[tabTitle:upper()] = action
     end
 end
 

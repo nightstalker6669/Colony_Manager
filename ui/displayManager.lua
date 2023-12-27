@@ -26,7 +26,7 @@ displayManager.showHomePage = function(monitor)
     mainDisplay.showWelcomeScreen(monitor)
     navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
-        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
+        showCitizenDetailsPage = displayManager.showCitizenDetailsPage // INPUT_REQUIRED The showCitizenDetailsPage function should display the citizen details page
     })
 end
 
@@ -37,7 +37,7 @@ function displayManager.init()
     end
     navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
-        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
+        showCitizenDetailsPage = displayManager.showCitizenDetailsPage // INPUT_REQUIRED Check here that the ID 'CITIZENS' matches the ID expected in the action bindings for displaying citizen details page
     })
 
     navigation.bindActions({

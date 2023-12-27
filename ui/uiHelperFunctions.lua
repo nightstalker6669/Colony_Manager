@@ -19,9 +19,10 @@ function uiHelpers.drawButton(monitor, x, y, text, buttonId)
     monitor.write("[" .. text .. "]")
     -- Ensure that buttons are not being overwritten
     if buttonList[buttonId] then
-        debugLogger.log("Warning: Overwriting existing buttonId " .. buttonId)
+        error("Button ID '" .. buttonId .. "' is already in use.")
+    else
+        buttonList[buttonId] = { x = x, y = y, width = width, height = height }
     end
-    buttonList[buttonId] = { x = x, y = y, width = width, height = height }
     -- Debug log to check if buttonList is correctly populated
     for id, button in pairs(buttonList) do
         debugLogger.log("ButtonList contains: " .. id .. " at " .. "x: " .. button.x .. " y: " .. button.y .. " width: " .. button.width .. " height: " .. button.height)
