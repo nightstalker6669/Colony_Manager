@@ -18,8 +18,8 @@ function displayManager.showCitizenDetailsPage(monitor, currentPage)
     currentPage = math.max(0, math.min(math.ceil(#citizens / 4) - 1, currentPage))
     citizenDisplay.showCitizens(citizens, monitor, currentPage)
     local _, monitorHeight = monitor.getSize()
-    local totalPages = math.ceil(#citizens / 4) -- INPUT_REQUIRED add proper calculation for totalPages if applicable logic changes
-    local yCoordinateForPageControls = monitorHeight - 1 -- INPUT_REQUIRED Make sure this calculation for y coordinate is correct based on your specific monitor setup
+    local totalPages = math.ceil(#citizens / 4) 
+    local yCoordinateForPageControls = monitorHeight - 1 
     pageControls.showPageControls(monitor, currentPage, totalPages, yCoordinateForPageControls)
 end
 displayManager.showHomePage = function(monitor)
@@ -28,21 +28,17 @@ displayManager.showHomePage = function(monitor)
         showHomePage = displayManager.showHomePage,
         showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
-end
+}
 
--- Previous implementation of init function
 function displayManager.init()
     local monitor = peripheral.find("monitor")
     if not monitor then
         error("Could not find an advanced monitor.")
     end
-
     navigation.init(monitor, {
         showHomePage = displayManager.showHomePage,
         showCitizenDetailsPage = displayManager.showCitizenDetailsPage
     })
-
-    navigation.drawTabs(monitor, TAB_START_LINE)
 
     navigation.bindActions({
         HOME = function() displayManager.showHomePage(monitor) end,

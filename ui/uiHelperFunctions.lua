@@ -17,13 +17,22 @@ function uiHelpers.drawButton(monitor, x, y, text, buttonId)
     local height = 1 -- Assign a default height for the button
     monitor.setCursorPos(x, y)
     monitor.write("[" .. text .. "]")
+    -- Ensure that buttons are not being overwritten
+    if buttonList[buttonId] then
+        debugLogger.log("Warning: Overwriting existing buttonId " .. buttonId)
+    end
     buttonList[buttonId] = { x = x, y = y, width = width, height = height }
+    -- Debug log to check if buttonList is correctly populated
+    for id, button in pairs(buttonList) do
+        debugLogger.log("ButtonList contains: " .. id .. " at " .. "x: " .. button.x .. " y: " .. button.y .. " width: " .. button.width .. " height: " .. button.height)
+    end
 end
 
 function uiHelpers.getSelectedButton(touchedX, touchedY)
     for id, button in pairs(buttonList) do
         if touchedX >= button.x and touchedX <= (button.x + button.width - 1)
            and touchedY >= button.y and touchedY <= (button.y + button.height) then
+            debugLogger.log("Selected buttonId: " .. id)
             return id
         end
     end
