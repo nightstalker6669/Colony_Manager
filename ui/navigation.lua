@@ -8,8 +8,8 @@ local tabs
 
 function navigation.init(monitor, actions)
     tabs = {
-        { ["title"] = "HOME", ["action"] = actions.showHomePage },
-        { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
+        { title = "HOME", action = actions.showHomePage },
+        { title = "CITIZENS", action = actions.showCitizenDetailsPage }
     }
     -- SET TEXT SCALE -- ensure text size is set correctly before drawing tabs.
     monitor.setTextScale(0.5)
@@ -35,8 +35,8 @@ end
 
 function navigation.handleTabTouch(monitor, x, y)
     local selectedButton = uiHelpers.getSelectedButton(x, y)
-    if selectedButton and tabs[selectedButton] then
-        tabs[selectedButton]["action"]()
+    if selectedButton and actionBindings[selectedButton] then
+        actionBindings[selectedButton]()
     end
 end
 
