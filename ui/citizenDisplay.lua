@@ -1,5 +1,6 @@
 local pageControls = require("ui.pageControls")
 
+
 local citizenDisplay = {}
 
 local currentPage = 0
