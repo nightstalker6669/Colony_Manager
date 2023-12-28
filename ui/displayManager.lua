@@ -24,14 +24,6 @@ function displayManager.showCitizenDetailsPage(monitor, currentPage)
 end
 displayManager.showHomePage = function(monitor)
     mainDisplay.showWelcomeScreen(monitor)
-    navigation.init(monitor, {
-        showHomePage = displayManager.showHomePage,
-        showCitizenDetailsPage = displayManager.showCitizenDetailsPage
-    })
-    local tasks = uiHelpers.fetchTasks()
-    local _, maxHeight = monitor.getSize()
-    local maxLines = maxHeight - TAB_START_LINE
-    mainDisplay.showTasks(tasks, monitor, maxLines)
 end
 
 function displayManager.init()
@@ -45,7 +37,8 @@ function displayManager.init()
         nextPage = function() pageControls.changePage(monitor, 1, displayManager.showCitizenDetailsPage) end,
         prevPage = function() pageControls.changePage(monitor, -1, displayManager.showCitizenDetailsPage) end
     })
-    displayManager.showHomePage(monitor)
+    
+displayManager.showHomePage(monitor)
 end
 
 function displayManager.handleNavigation()
