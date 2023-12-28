@@ -8,10 +8,10 @@ local TAB_START_LINE = 3
 
 function navigation.init(monitor, actions)
     local tabs = {
-        { title = "HOME", action = actions.showHomePage },
-        { title = "CITIZENS", action = actions.showCitizenDetailsPage },
-        { title = "STATISTICS", action = actions.showStatisticsPage },
-        { title = "SETTINGS", action = actions.showSettingsPage }
+        { title: "HOME", action = actions.showHomePage },
+        { title: "CITIZENS", action = actions.showCitizenDetailsPage },
+        { title: "STATISTICS", action = actions.showStatisticsPage },
+        { title: "SETTINGS", action = actions.showSettingsPage }
     }
     -- SET TEXT SCALE -- ensure text size is set correctly before drawing tabs.
     monitor.setTextScale(0.5)
