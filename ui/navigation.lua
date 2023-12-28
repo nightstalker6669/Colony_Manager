@@ -8,16 +8,16 @@ local tabs
 local actionBindings = {}
 
 function navigation.init(monitor, actions)
-    if not actions or type(actions) ~= "table" then
+    if actions and type(actions) == "table" then
+        tabs = {
+            { ["title"] = "HOME", ["action"] = actions.showHomePage },
+            { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
+        }
+        actionBindings = actions
+        navigation.drawTabs(monitor)
+    else
         error("Argument 'actions' must be a table with tab actions.")
     end
-
-    tabs = {
-        { ["title"] = "HOME", ["action"] = actions.showHomePage },
-        { ["title"] = "CITIZENS", ["action"] = actions.showCitizenDetailsPage }
-    }
-    actionBindings = actions
-    navigation.drawTabs(monitor)
 end
 
 navigation.drawTabs = function(monitor)

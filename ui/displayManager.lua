@@ -31,7 +31,12 @@ function displayManager.init()
     if not monitor then
         error("Could not find an advanced monitor.")
     end
-    navigation.bindActions({
+    navigation.init(monitor, {
+        showHomePage = function() displayManager.showHomePage(monitor) end,
+        showCitizenDetailsPage = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end
+    })
+    
+navigation.bindActions({
         HOME = function() displayManager.showHomePage(monitor) end,
         CITIZENS = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end,
         nextPage = function() pageControls.changePage(monitor, 1, displayManager.showCitizenDetailsPage) end,
