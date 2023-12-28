@@ -2,6 +2,7 @@
 
 local uiHelpers = require("ui.uiHelperFunctions")
 
+local actionBindings = {} -- Initialising the actionBindings variable
 local navigation = {}
 local tabs
 
@@ -50,4 +51,3 @@ navigation.bindActions = function(bindings)
 end
 
 return navigation
-
