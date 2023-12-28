@@ -13,14 +13,14 @@ function navigation.init(monitor, actions)
     }
     -- SET TEXT SCALE -- ensure text size is set correctly before drawing tabs.
     monitor.setTextScale(0.5)
-    navigation.drawTabs(monitor)
+    navigation.drawTabs(monitor, tabs) -- pass tabs to the drawTabs function
 end
 
-navigation.drawTabs = function(monitor)
+function navigation.drawTabs(monitor, tabList)
     local startLine = _G.TAB_START_LINE
     monitor.clear()
     local x = 1
-    for _, tab in ipairs(tabs) do
+    for _, tab in ipairs(tabList) do
         if not uiHelpers.isButtonDrawn(tab["title"]) then
             uiHelpers.drawButton(monitor, x, startLine, tab["title"], tab["title"])
             x = x + string.len(tab["title"]) + 3
@@ -33,13 +33,10 @@ navigation.drawTabs = function(monitor)
     end
 end
 
-navigation.handleTabTouch = function(monitor, x, y)
+function navigation.handleTabTouch(monitor, x, y)
     local selectedButton = uiHelpers.getSelectedButton(x, y)
-    if selectedButton then
-        local action = tabs[selectedButton]
-        if actionBindings[action] then
-            actionBindings[action]()
-        end
+    if selectedButton and tabs[selectedButton] then
+        tabs[selectedButton]["action"]()
     end
 end
 

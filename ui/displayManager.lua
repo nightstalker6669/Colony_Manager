@@ -37,10 +37,9 @@ function displayManager.init()
     })
     
 navigation.bindActions({
-        HOME = function() displayManager.showHomePage(monitor) end,
-        CITIZENS = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end,
-        nextPage = function() pageControls.changePage(monitor, 1, displayManager.showCitizenDetailsPage) end,
-        prevPage = function() pageControls.changePage(monitor, -1, displayManager.showCitizenDetailsPage) end
+        ["HOME"] = function() displayManager.showHomePage(monitor) end,
+        ["CITIZENS"] = function() displayManager.showCitizenDetailsPage(monitor, currentPage) end
+        -- Add other actions if needed
     })
     
 displayManager.showHomePage(monitor)
@@ -60,4 +59,3 @@ function displayManager.handleNavigation()
 end
 
 return displayManager
-
