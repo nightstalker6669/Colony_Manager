@@ -2,7 +2,7 @@
 
 local uiHelpers = require("ui.uiHelperFunctions")
 
-local actionBindings = {} -- Initialising the actionBindings variable
+local actionBindings = {}
 local navigation = {}
 local tabs
 
@@ -13,10 +13,10 @@ function navigation.init(monitor, actions)
     }
     -- SET TEXT SCALE -- ensure text size is set correctly before drawing tabs.
     monitor.setTextScale(0.5)
-    navigation.drawTabs(monitor, tabs)
+    navigation.drawTabs(monitor)
 end
 
-navigation.drawTabs = function(monitor, tabs)
+navigation.drawTabs = function(monitor)
     local startLine = _G.TAB_START_LINE
     monitor.clear()
     local x = 1
@@ -34,19 +34,18 @@ navigation.drawTabs = function(monitor, tabs)
 end
 
 navigation.handleTabTouch = function(monitor, x, y)
-    uiHelpers.validateButtonCoordinates(x, y)
-    local buttonId = uiHelpers.getSelectedButton(x, y)
-    if buttonId then
-        local actionName = buttonId:upper()
-        if actionBindings[actionName] then
-            actionBindings[actionName]()
+    local selectedButton = uiHelpers.getSelectedButton(x, y)
+    if selectedButton then
+        local action = tabs[selectedButton]
+        if actionBindings[action] then
+            actionBindings[action]()
         end
     end
 end
 
 navigation.bindActions = function(bindings)
-    for tabTitle, action in pairs(bindings) do
-        actionBindings[tabTitle:upper()] = action
+    for actionName, action in pairs(bindings) do
+        actionBindings[actionName:upper()] = action
     end
 end
 
