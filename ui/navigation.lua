@@ -4,7 +4,10 @@ local uiHelpers = require("ui.uiHelperFunctions")
 
 local navigation = {}
 
-local tabs
+-- Initialize actionBindings table 
+local actionBindings = {}
+
+-- Additional properties and methods for navigation
 
 function navigation.init(monitor, actions)
     tabs = {
@@ -36,12 +39,12 @@ navigation.handleTabTouch = function(monitor, x, y)
     uiHelpers.validateButtonCoordinates(x, y)
     local buttonId = uiHelpers.getSelectedButton(x, y)
     if buttonId then
-        local debugLogger = require("utils.debugLogger")
+        local debugLogger = require("utils.debugLogger") -- INPUT_REQUIRED Remove or modify debugLogger lines if not required in production
         debugLogger.log("Tab touch detected: " .. buttonId)
         local actionName = buttonId:upper()
         if actionBindings[actionName] then
             debugLogger.log("Executing action for: " .. buttonId)
-            actionBindings[actionName](monitor)
+            actionBindings[actionName]()
         else
             debugLogger.log("No action binding found for: " .. buttonId)
         end
