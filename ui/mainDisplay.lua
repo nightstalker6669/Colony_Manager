@@ -31,14 +31,13 @@ function mainDisplay.showWelcomeScreen(monitor)
         monitor.write(message)
         return
     end
-    -- Continue with the rest of the function as is...
     monitor.clear()
-    monitor.setCursorPos(1,1)
     monitor.setTextScale(0.5)
+    monitor.setCursorPos(1,1)
     monitor.write("Welcome to the Colony Manager!")
     monitor.setCursorPos(1, TAB_START_LINE + 1) -- Leave space for the tabs
     navigation.drawTabs(monitor, TAB_START_LINE)
-    local infoStartLine = TAB_START_LINE + 3 -- Additional space for separation
+    local infoStartLine = TAB_START_LINE + 4 -- Leave enough space for the tabs and the aesthetics
     monitor.setCursorPos(1, infoStartLine)
     monitor.write("Colony ID: " .. data.colonyID)
     monitor.setCursorPos(1, infoStartLine + 1)
