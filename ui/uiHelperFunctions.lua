@@ -4,36 +4,24 @@ local uiHelpers = {}
 
 local buttonList = {}
 
-local debugLogger = require("utils.debugLogger")
-
 function uiHelpers.drawButton(monitor, x, y, text, buttonId)
-    debugLogger.log("drawing button: " .. text)
-    local monitorWidth, _ = monitor.getSize()
-    uiHelpers.validateButtonCoordinates(x, y) -- Ensure that coordinates are numbers
+    -- Ensure that coordinates are numbers
+    uiHelpers.validateButtonCoordinates(x, y)
     local width = string.len(text) + 2
-    if x + width > monitorWidth then
-        error("Button exceeds monitor width, adjust the position or monitor size.")
-    end
     local height = 1 -- Assign a default height for the button
     monitor.setCursorPos(x, y)
     monitor.write("[" .. text .. "]")
-    -- Ensure that buttons are not being overwritten
+    -- Debug log to check if buttonList is correctly populated
     if buttonList[buttonId] then
         error("Button ID '" .. buttonId .. "' is already in use.")
     else
         buttonList[buttonId] = { x = x, y = y, width = width, height = height }
     end
-    -- Debug log to check if buttonList is correctly populated
-    for id, button in pairs(buttonList) do
-        debugLogger.log("ButtonList contains: " .. id .. " at " .. "x: " .. button.x .. " y: " .. button.y .. " width: " .. button.width .. " height: " .. button.height)
-    end
 end
 
 function uiHelpers.getSelectedButton(touchedX, touchedY)
     for id, button in pairs(buttonList) do
-        if touchedX >= button.x and touchedX <= (button.x + button.width - 1)
-           and touchedY >= button.y and touchedY <= (button.y + button.height) then
-            debugLogger.log("Selected buttonId: " .. id)
+        if touchedX >= button.x and touchedX <= (button.x + button.width - 1) and touchedY >= button.y and touchedY <= (button.y + button.height) then
             return id
         end
     end
@@ -41,20 +29,16 @@ function uiHelpers.getSelectedButton(touchedX, touchedY)
 end
 
 function uiHelpers.validateButtonCoordinates(x, y)
-    debugLogger.log("validateButtonCoordinates called with X=" .. tostring(x) .. ", Y=" .. tostring(y))
-    if x == nil then
-        error("X coordinate must not be nil.")
-    end
-    if y == nil then
-        error("Y coordinate must not be nil.")
-    end
-    if type(x) ~= "number" then
-        error("X coordinate must be a number. Received: " .. tostring(x))
-    end
-    if type(y) ~= "number" then
-        error("Y coordinate must be a number. Received: " .. tostring(y))
+    if type(x) ~= "number" or type(y) ~= "number" then
+        error("Coordinates must be numbers. Received: X=" .. tostring(x) .. ", Y=" .. tostring(y))
     end
     return true
 end
+
+function uiHelpers.isButtonDrawn(buttonId)
+    return buttonList[buttonId] ~= nil
+end
+
+-- Rest of the code...
 
 return uiHelpers
